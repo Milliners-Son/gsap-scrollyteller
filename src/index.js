@@ -1,12 +1,20 @@
-const { h, render } = require('preact');
+const { h, render, Component } = require('preact');
 
 const PROJECT_NAME = 'shoe-animation';
 const root = document.querySelector(`[data-${PROJECT_NAME}-root]`);
 
 function init() {
+
   const App = require('./components/App');
 
-  render(<App projectName={PROJECT_NAME} />, root, root.firstChild);
+
+  render(
+    <App projectName={PROJECT_NAME}>
+    </App>
+    , root, root.firstChild
+  );
+
+
 }
 
 init();
