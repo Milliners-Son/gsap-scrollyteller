@@ -16,7 +16,7 @@ class Pixels extends Component {
     render(props,state) {
     
         //Replace default states with props.options;
-        
+
        state.coords = (props.options.coords?props.options.coords:state.coords);
        state.size = (props.options.size?props.options.size:state.size);
        state.type = (props.options.type?props.options.type:state.type);
@@ -26,7 +26,7 @@ class Pixels extends Component {
 
         return (
 
-            <div style={`width:${state.width}px;height:${state.height}px;`} onClick={props.onClick} className={styles.holder} id={props.id}>
+            <div style={`width:${state.width}px;height:${state.height}px;`} onClick={props.onClick} className={`${styles.holder} ${props.className}`} id={props.id}>
                 {state.coords.map(
                     (row,y)=>
                 row.map((x)=>(

@@ -1,5 +1,5 @@
 const { h, Component } = require('preact');
-const styles = require('../scss/tick.scss');
+
 const Pixels = require('./pixelart.js');
 import {TweenMax, Power2, TimelineLite,TimelineMax} from "gsap";
 const TL = TweenLite;
@@ -36,7 +36,7 @@ class Tick extends Component {
         }
 
         return (
-            <Pixels onClick={blastIt} className={styles.tick} options={state} id="tick_graphic"/>
+            <Pixels onClick={blastIt} className={`${props.className}`} options={state} id={props.id}/>
         );
     }
 }
