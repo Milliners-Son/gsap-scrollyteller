@@ -1,7 +1,7 @@
 {
   "name": "shoe-animation",
-  "version": "1.0.0",
-  "description": "A project generated from aunty's preact-app template.",
+  "version": "0.0.2",
+  "description": "An animated scrolly teller using Greensock and Preact",
   "license": "MIT",
   "private": true,
   "contributors": [
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "gsap": "^1.20.3",
+    "jquery": "^3.2.1",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0"
   }

@@ -1,6 +1,11 @@
 body{
     background:#009fe3;
 }
+*, :after, :before {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box; }
+    
 .root{
     display: relative;
 }

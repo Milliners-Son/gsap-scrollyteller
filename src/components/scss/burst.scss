@@ -1,0 +1,12 @@
+.burst{
+        overflow: hidden;
+        overflow: hidden;
+        position: absolute;
+
+        left: 0;
+        top: 0;
+        z-index: -1;
+        
+    .lines{fill:none;stroke:#000000;stroke-width:15;stroke-linecap:round;stroke-miterlimit:10;}
+    .circlemask{fill:#FFFFFF;}
+}

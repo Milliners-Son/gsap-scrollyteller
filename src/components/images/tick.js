@@ -1,9 +1,6 @@
 const { h, Component } = require('preact');
-
 const Pixels = require('./pixelart.js');
-import {TweenMax, Power2, TimelineLite,TimelineMax} from "gsap";
-const TL = TweenLite;
-const TM = TweenMax;
+
 
 class Tick extends Component {
 
@@ -23,20 +20,13 @@ class Tick extends Component {
             [2,3,4,5,6,7,8,9],
             [3,4,5,6,7]        
         );
-        this.state.size = 10;
+        this.state.size = 5;
         this.state.max = 31;
     }
     render(props,state) {
-       
-        let blastIt = ()=>{
-            console.log('blastit');
-            let blast = new TimelineMax;
-            blast.staggerTo("div[data-symbol]",1,{top:200,ease:Bounce.easeOut},0.01);
-            blast.play();
-        }
 
         return (
-            <Pixels onClick={blastIt} className={`${props.className}`} options={state} id={props.id}/>
+            <Pixels className={`${props.className}`} options={state} id={props.id}/>
         );
     }
 }

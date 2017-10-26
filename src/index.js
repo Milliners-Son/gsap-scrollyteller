@@ -9,6 +9,7 @@ function init() {
 
 
   render(
+    
     <App projectName={PROJECT_NAME}>
     </App>
     , root, root.firstChild
@@ -33,6 +34,5 @@ if (module.hot) {
 
 if (process.env.NODE_ENV === 'development') {
   require('preact/devtools');
-
-  console.debug(`[${PROJECT_NAME}] public path: ${__webpack_public_path__}`);
+  const $ = require('jquery');
 }

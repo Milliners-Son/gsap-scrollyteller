@@ -1,3 +1,27 @@
+@mixin add_transition($atr,$time:0.5,$ease:ease-in-out){
+	-webkit-transition:$atr $ease $time+s;
+	-moz-transition:$atr $ease $time+s;
+	-o-transition:$atr $ease $time+s;
+	transition:$atr $ease $time+s
+}
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+
 .root{
     width:500px;
     height:700px;
@@ -16,11 +40,104 @@
     bottom:0;
     left:0; right:0; margin:auto;
 }
+
+$background-color:#009fe3;
+
 .body{
+    background:$background-color;
     width:100%;
-    height:100vh;
-}
-.tick{
-    margin:0 auto;
-    left:0; right:0;
+    height:95vh;
+    
+    div{
+        position:relative;
+    }
+
+    .aniButtonHolder{
+        width:100%;
+        position: absolute;
+        top:0px;
+        left:0;
+        text-align:center;
+        padding:1em;
+    }
+    .anibutton{
+        width:100px;height:20px;
+        background:#f2f2f2;
+        cursor: pointer;
+        display:inline-block;
+        margin:1em;
+
+    }
+    .canvas{
+        width:800px;
+        height:500px;
+        margin-top:100px;
+        overflow:hidden;
+        border:1px solid #f2f2f2;
+        .tick{
+            
+            position:absolute;
+            z-index: 10;
+            right:1px;
+            top:100px;
+        }
+
+        .shoeHolder{
+            width:300px;
+            height:300px;
+            position: absolute;
+
+            
+        }
+        .shoeHolderFront{
+            z-index: 10;
+        }
+        .shoeHolderBack{
+            z-index: 5;
+        }
+
+
+
+
+
+        .shoeMask{
+            width:100%;height:100%;
+            z-index: 5;
+            background:$background-color;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .imageHolder{
+            width:100%;
+            height:auto;
+            position:absolute;
+            top:0;
+            left:0;
+            img{
+                width:100%;height:auto;
+            }
+        }
+        .shoeFront{
+            z-index: 6;
+            top:50px;
+            left:50px;
+        }
+        .shoeBack{
+            z-index: 1;
+        }
+
+        .burst{
+            overflow: hidden;
+            overflow: hidden;
+            position: absolute;
+
+            left: 0;
+            top: 0;
+    
+            
+            .line{fill:none;stroke:rgba(255,255,255,0.5);stroke-width:15;stroke-linecap:round;stroke-miterlimit:10;}
+            .circlemask{fill:$background-color;}
+        }
+    }
+
 }
