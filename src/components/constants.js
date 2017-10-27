@@ -6,7 +6,8 @@ const IDS={
     SHOEHOLDER_BACK:"show_holder_back",
     SHOEMASK_FRONT:"shoe_mask_front",
     SHOEMASK_BACK:"shoe_mask_back",
-    BURST:"burst_holder"
+    BURST:"burst_holder",
+    DOLLAR_NUMBER:"dollar_number_holder"
   }
 
 module.exports = {IDS};

@@ -26,10 +26,12 @@ const {IDS} = require('../components/constants.js');
 class App extends Component {
 
   componentDidMount(){
+    
     animation.init();
   }
 
   render() {
+    let frameArray = [0,1,2,3,4,5];
     return (
       <div className={styles.body}>
 
@@ -49,17 +51,15 @@ class App extends Component {
             <div className={styles.shoeMask} id={IDS.SHOEMASK_BACK} />
             <ImageHolder id={IDS.SHOE_BACK} className={styles.shoeBack} img={shoePNG}/>
           </div>
+
+          <div id={IDS.DOLLAR_NUMBER} className={`${styles.numberHolder} ${styles.dollarCount}`} />
+        
         </div>
+        
         
 
         <div className={styles.aniButtonHolder}>
-          
-            <AniButton className={styles.anibutton} onClick={()=>animation.play(0)} label="0"/>
-            <AniButton className={styles.anibutton} onClick={()=>animation.play(1)} label="1"/>
-            <AniButton className={styles.anibutton} onClick={()=>animation.play(2)} label="2"/>
-            <AniButton className={styles.anibutton} onClick={()=>animation.play(3)} label="3"/>
-            <AniButton className={styles.anibutton} onClick={()=>animation.play(4)} label="4"/>
-
+            {  frameArray.map((num)=><AniButton className={styles.anibutton} onClick={()=>animation.play(num)} label={num}/>) }
         </div>
       </div>
     );

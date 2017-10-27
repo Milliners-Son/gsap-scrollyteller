@@ -81,7 +81,12 @@ $background-color:#009fe3;
             right:1px;
             top:100px;
         }
-
+        .numberHolder{
+            width:300px;
+            height:100px;
+            font:Sans-serif;
+            color:#fff;
+        }
         .shoeHolder{
             width:300px;
             height:300px;
@@ -96,7 +101,16 @@ $background-color:#009fe3;
             z-index: 5;
         }
 
+        .numberHolder{
+            font-weight: bold;
+            font-size: 50px;
+            z-index: 20;
 
+        }
+        .dollarCount{
+            bottom: 0;
+            position: absolute;
+        }
 
 
 
