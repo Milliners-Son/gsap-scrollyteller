@@ -13,7 +13,13 @@ $shoeBack,
 $shoeMaskFront,
 $shoeMaskBack,
 $tick,
-$dollarNumber
+$dollarNumber,
+$netherlandsFlag,
+$ausFlag,
+$frame1,
+$frame2,
+$ausTax,
+$nethTax
 
 let prepConstants = ()=>{
   $shoePixels = document.querySelectorAll(`#${IDS.TICK} div[data-symbol]`);
@@ -25,6 +31,12 @@ let prepConstants = ()=>{
   $shoeMaskBack  = queryID(IDS.SHOEMASK_BACK);
   $tick = queryID(IDS.TICK);
   $dollarNumber =queryID(IDS.DOLLAR_NUMBER);
+  $netherlandsFlag = queryID(IDS.NETHERLAND_FLAG_ANI);
+  $ausFlag = queryID(IDS.AUS_FLAG_ANI);
+  $frame1 = queryID(IDS.FRAME1);
+  $frame2 = queryID(IDS.FRAME2);
+  $ausTax = queryID(IDS.AUSTAX);
+  $nethTax = queryID(IDS.NETHTAX);
 }
 
 let master;
@@ -47,12 +59,23 @@ let setCurrent = (index)=>{
 
 //FRAMES
 let prepStage = ()=>{
+
+  let hideArray = [
+    $dollarNumber,
+    $netherlandsFlag,
+    $ausFlag,
+    $ausTax,
+    $nethTax
+  ];
+
   let section = new TimelineMax({id:`START`});
     //Set
     section.set([$shoeHolderFront,$shoeHolderBack],{scale:0.5,rotation:10,autoAlpha:0,bottom:100});
     section.set($shoeHolderFront,{left:50});
     section.set([$shoeMaskFront,$shoeMaskBack],{scale:0,transformOrigin:"center center"});
-    section.set($dollarNumber,{autoAlpha:0});
+    section.set(hideArray,{autoAlpha:0});
+    section.set('[data-circlemask]',{scale:0});
+
     return section
 }
 let popIn = (index)=>{
@@ -79,7 +102,7 @@ let hideBackShoe = (index)=>{
 let hideFrontShoe = (index)=>{
   let section = new TimelineMax({id:`Part ${index}`,onComplete:setCurrent(index)});
 
-  section.to($tick,0.5,{scale:1.1,ease: Power2.easeIn},"0");
+  section.to($tick,0.5,{scale:1.8,right:"20%",top:0,ease: Power2.easeIn},"0");
   section.to($shoeFront,0.5,{scale:0.8,ease: Power2.easeIn},"0");
   section.to($shoeMaskFront,0.5,{scale:2,transformOrigin:"center center",ease: Power2.easeIn},"0");
   section.to($dollarNumber,0.5,{autoAlpha:1},"0");
@@ -101,18 +124,62 @@ let remove20Percent = (index)=>{
   section.to($dots,0.5,{autoAlpha:0})
   
   section.add(countNumber(100,80,IDS.DOLLAR_NUMBER),"0");
+  return section;
+  
+}
+
+let showNethFlag = (index) =>{
+  let section = new TimelineMax({id:`Part ${index}`,onComplete:setCurrent(index)});
+  section.set($netherlandsFlag,{left:"30%"})
+  section.set($frame1,{zIndex:1});
+  section.set($frame2,{zIndex:10});
+  section.to($netherlandsFlag,1,{autoAlpha:1});
+  //section.to($frame1,0.7,{autoAlpha:0,top:30,ease:Power2.easeOut},"0");
+
+  section.to($($frame1).find('[data-circlemask]'),1,{scale:10},"0");
+  section.set($frame1,{autoAlpha:0});
 
   return section;
   
 }
 
+let showAusTax = (index)=>{
+  let section = new TimelineMax({id:`Part ${index}`,onComplete:setCurrent(index)});
+  section.set($ausTax,{autoAlpha:1,left:"-50%"});
+  section.to($ausFlag,0.5,{autoAlpha:1});
+  section.to($netherlandsFlag,0.5,{left:"50%"},"0");
+  section.to($ausTax,2,{left:0,rotation:360,
+    ease: Power4.easeOut},
+  "0");
+  section.to(queryID(`${IDS.AUSTAX}_chunk`),1,{top:-50,left:50},"-=0.3");
+  return section;  
+}
+
+let showNethTax = (index)=>{
+  let section = new TimelineMax({id:`Part ${index}`,onComplete:setCurrent(index)});
+  section.set($nethTax,{autoAlpha:1,right:"-50%"});
+  section.to($nethTax,2,{right:0,rotation:-360,
+    ease: Power4.easeOut},
+  "0");
+  return section
+}
+let returnToCosting = (index)=>{
+  let section = new TimelineMax({id:`Part ${index}`,onComplete:setCurrent(index)});
+  section.to($($frame2).find('[data-circlemask]'),0.5,{scale:10,ease:Power2.easeIn},"0");
+  section.set($frame2,{autoAlpha:0});
+  section.set($frame1,{autoAlpha:1});
+  section.to($($frame1).find('[data-circlemask]'),0.5,{scale:0,ease:Power2.easeOut});
+
+  return section;
+
+}
 /////////////////
 //UTILS
 
 //ANIMATION SNIPPETS
 let burst = (id)=>{
   let snippet = new TimelineMax;
-  snippet.set(`#${id}`,{scale:0.8,left: "-100",top: "-172",autoAlpha:0})
+  snippet.set(`#${id}`,{scale:0.8,autoAlpha:0})
   snippet.to(`#${id}`,1.1,{rotation:30, transformOrigin:"center center",autoAlpha:1})
   snippet.to(`#${id} [data-id="circle_outer"]`,0.5,{scale:5, transformOrigin:"center center"},"0");
   snippet.to(`#${id} [data-id="circle_inner"]`,0.5,{scale:5, transformOrigin:"center center"},"0.5");
@@ -124,10 +191,9 @@ let countNumber = (from,to,container)=>{
   let number = {count:from};
   let countSection = new TimelineMax();
   let updateContainer = ()=>{
-    console.log(number.count);
+
    
     let countHolder = document.getElementById(container);
-    console.log(countHolder);
     $(countHolder).html('$'+Math.round(number.count));
   }
   countSection.to(number,1,{count:to,roundProps:"score",onUpdate:updateContainer});
@@ -203,23 +269,44 @@ let init = ()=>{
   master.add(hideBackShoe(2));
   master.add(addLabel("Single Shoe"));
 
-  // #markIDthree
-  // Of the $100 shoe that's left - the money Nike makes wholesaling a pair of shoes - the money takes a surprising journey.
+  //START APPARENTLY
+  // Take the $100 that Nike makes wholesaling a pair of shoes - the money takes a surprising journey.
   master.add(hideFrontShoe(3));
   master.add(addLabel("Count"));
 
-  //markIDthreeish
+  //#frame2
   // Just on $80 of that shoe will go to a Nike company in the Netherlands.
   master.add(remove20Percent(4));
   master.add(addLabel("Remove 20 percent"))
 
-  // #markIDfour
+  //#frame3
   // Why the Netherlands?
   // It could be because Nike likes tulips and bicycles.
   // Or it could be because Nike likes a tax regime that allows elaborate corporate structures.
+  master.add(showNethFlag(5));
+  master.add(addLabel("Show Netherlands Flag"))
 
+  //#frame4
+  // It’s worth remembering that if you make a dollar of profit in Australia, you have to pay 30 cents in tax.
+  master.add(showAusTax(5));
+  master.add(addLabel("Show Australian Tax"))
 
-  
+  //#frame5
+  // In the Netherlands, if you play your cards right, you may not have to pay a cent.
+  master.add(showNethTax(6));
+  master.add(addLabel("Show Netherlands Tax"))
+
+  //#frame6
+  // That Australian money does not stay in the Netherlands. 
+  // From the $80 Nike pays for the manufacture of each shoe, in factories it subcontracts in countries such as Vietnam,  Indonesia and China. 
+  master.add(returnToCosting(7));
+  master.add(addLabel("Return to costing"))
+  //#frame8
+  // While Nike’s manufacturing costs aren’t publicly available, a report from German consumer group Stiftung Warentest, calculated the average price of manufacturing for five of the top athetic shoes makes at about $36.
+
+//#frame9
+// And also from the $80, Nike pays about $17 (on most recent estimates STUART TO CHECK) to a company called Nike Innovate CV. 
+
   master.add(addLabel("End"));
   master.pause();
 

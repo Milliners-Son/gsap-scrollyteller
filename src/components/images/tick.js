@@ -20,7 +20,7 @@ class Tick extends Component {
             [2,3,4,5,6,7,8,9],
             [3,4,5,6,7]        
         );
-        this.state.size = 5;
+        this.state.size = 8;
         this.state.max = 31;
     }
     render(props,state) {
