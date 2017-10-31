@@ -1,38 +1,54 @@
 const { h, render, Component } = require('preact');
 
-const PROJECT_NAME = 'shoe-animation';
-const root = document.querySelector(`[data-${PROJECT_NAME}-root]`);
+let stage = document.querySelector(".scrollyteller-stage");
 
-function init() {
+//test
+if (stage) {
+  init({
+    target: stage,
+    detail: stage.__SCROLLYTELLER__
+  });
+} else {
+  // console.log('waiting for the stage');
 
-  const App = require('./components/App');
-
-
-  render(
-    
-    <App projectName={PROJECT_NAME}>
-    </App>
-    , root, root.firstChild
-  );
-
-
+  document.arrive(".scrollyteller-stage", function() {
+    // console.log('Stage has arrived...');
+    stage = document.querySelector(".scrollyteller-stage");
+    // console.log('Initialising interactive...');
+    init({
+      target: stage,
+      detail: stage.__SCROLLYTELLER__
+    });
+    // Unbind arrive listener
+    document.unbindArrive();
+  });
 }
 
-init();
+function init(ev) {
+  const App = require("./components/App");
+  render(<App />, stage, stage.firstChild);
+}
 
 if (module.hot) {
-  module.hot.accept('./components/App', () => {
+  module.hot.accept("./components/App", () => {
     try {
-      init();
+      init({
+        target: stage,
+        detail: stage.__SCROLLYTELLER__
+      });
     } catch (err) {
-      const ErrorBox = require('./components/ErrorBox');
+      const ErrorBox = require("./components/ErrorBox");
 
-      render(<ErrorBox error={err} />, root, root.firstChild);
+      render(<ErrorBox error={err} />, stage, stage.firstChild);
     }
   });
 }
 
-if (process.env.NODE_ENV === 'development') {
-  require('preact/devtools');
-  const $ = require('jquery');
+if (process.env.NODE_ENV === "development") {
+  require("preact/devtools");
+
+  console.debug(
+    `[shoe-animation] public path: ${__webpack_public_path__}`
+  );
 }
+

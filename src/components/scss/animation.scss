@@ -42,11 +42,14 @@
 }
 
 $background-color:#009fe3;
+$text-color:#fff;
+$primary-color:#f6b230;
+$secondary-color:#0033f6;
 
 .body{
     background:$background-color;
     width:100%;
-    height:95vh;
+    height:100%;
     
     div{
         position:relative;
@@ -112,12 +115,12 @@ $background-color:#009fe3;
         .numberHolder{
 
 
-            color:#fff;
+            color:$text-color;
 
             width: 100%;
             text-align: center;
             font-weight: bold;
-            font-size: 50px;
+            font-size: 80px;
             z-index: 20;
         }
         .shoeHolder{
@@ -206,5 +209,55 @@ $background-color:#009fe3;
             }
         }
     }
+    
+    $row-height:50px;
+    $row-margin:10px;
 
+
+    .simpleGraph{
+
+
+        width:90%; height:auto;
+        padding:50px 5px;
+
+        border-left:2px solid #fff;
+        border-bottom:2px solid #fff;
+
+        position:absolute;
+        bottom:0; left:0;
+
+        .simpleRow{
+            width:100%;
+            height: $row-height;
+            margin-bottom: $row-margin;
+            border-radius:3px;
+    
+                &[data-row="0"]{
+                    background: $primary-color;
+                }
+                &[data-row="1"]{
+                    background: $secondary-color;
+                }
+                &[data-row="3"]{
+                    background: $primary-color;
+                }
+                &[data-row="4"]{
+                    background: $secondary-color;
+                }
+
+
+            .simpleLabel{
+                position: absolute;
+                right: -100px;
+                width: 100px;
+                height: 100%;
+                color: $text-color;
+                font-family: "ABCsans";
+                font-weight: bold;
+                padding: 2px;
+                font-size: 1.1em;
+            }
+
+        }
+    }
 }

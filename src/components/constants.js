@@ -12,8 +12,10 @@ const IDS={
     AUS_FLAG_ANI:"australian_flag_ani",
     AUSTAX:"aus_tax_coin",
     NETHTAX:"neth_tax_coin",
+    TAXGRAPH:"tax_graph",
     FRAME1:"frame_1_holder",
-    FRAME2:"frame_2_holder"
+    FRAME2:"frame_2_holder",
+    FRAME3:"frame_3_holder"
   }
 
 module.exports = {IDS};
