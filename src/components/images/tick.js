@@ -1,5 +1,6 @@
 const { h, Component } = require('preact');
 const Pixels = require('./pixelart.js');
+const styles = require('../scss/pixelart.scss');
 
 
 class Tick extends Component {
@@ -26,7 +27,9 @@ class Tick extends Component {
     render(props,state) {
 
         return (
-            <Pixels className={`${props.className}`} options={state} id={props.id}/>
+            <Pixels className={`${props.className}`} options={state} id={props.id}>
+            <div data-pixel className={styles.pixel}  data-index="floating"></div>
+            </Pixels>
         );
     }
 }

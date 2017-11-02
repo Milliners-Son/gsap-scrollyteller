@@ -41,10 +41,12 @@
     left:0; right:0; margin:auto;
 }
 
-$background-color:#009fe3;
-$text-color:#fff;
-$primary-color:#f6b230;
+$background-color:#eee;
+$text-color:#222;
+$primary-color:#e52424;
 $secondary-color:#0033f6;
+$thirdary-color:#ffb41d;
+$border-color:#222;
 
 .body{
     background:$background-color;
@@ -84,8 +86,19 @@ $secondary-color:#0033f6;
         position: absolute;
         margin: auto;
         top: 100px;
-        left: 0;
-        right: 0;
+        left: 5%;
+
+        @media (max-width:700px){
+            transform: matrix(0.6, 0, 0, 0.6, 0, 0);
+            left: -65%;
+            top: 0;
+        }
+        @media (max-width:500px){
+            transform: matrix(0.4, 0, 0, 0.4, 0, 0);
+            left: -65%;
+            top: 0;
+        }
+        
         
         .frameHolder{
             position: absolute;
@@ -112,17 +125,7 @@ $secondary-color:#0033f6;
             right: 0%;
             top: 162px;
         }
-        .numberHolder{
 
-
-            color:$text-color;
-
-            width: 100%;
-            text-align: center;
-            font-weight: bold;
-            font-size: 80px;
-            z-index: 20;
-        }
         .shoeHolder{
             width:500px;
             height:400px;
@@ -167,17 +170,19 @@ $secondary-color:#0033f6;
         .shoeBack{
             z-index: 1;
         }
+
         .netherlandsFlag{
-            width: 40%;
+            width: 100%;
+            max-width:500px;
+
             position: absolute;
             z-index: 20;
             margin: 0 auto;
-            left: 0;
-            top: 30px;
+            left: 0; right:0;
+            top: 0;
         }
         .ausFlag{
              @extend .netherlandsFlag;
-
         }
 
         .burst{
@@ -196,7 +201,7 @@ $secondary-color:#0033f6;
             width: 40%;
             height: auto;
             position: absolute;
-            bottom: 0;
+            bottom: 15%;
             .coinTop{
                 position:relative;
                 z-index: 2;
@@ -208,6 +213,29 @@ $secondary-color:#0033f6;
                 z-index: 1;
             }
         }
+        .patentSwoosh{
+            width:300px;
+            height:auto;
+        }
+        .patentBubble{
+            @extend .patentSwoosh;
+            right:0;
+            left:auto;
+        }
+        .patentHolder{
+            width: 100%;
+            height:100%;
+            position: absolute;
+            top:0;
+            left:0;
+            
+            .patentBlank{
+                display: inline-block;
+                width:50px;
+                height:auto;
+                position:relative;
+            }
+        }
     }
     
     $row-height:50px;
@@ -217,11 +245,11 @@ $secondary-color:#0033f6;
     .simpleGraph{
 
 
-        width:90%; height:auto;
+        width:70%; height:auto;
         padding:50px 5px;
 
-        border-left:2px solid #fff;
-        border-bottom:2px solid #fff;
+        border-left:2px solid $border-color;
+        border-bottom:2px solid $border-color;
 
         position:absolute;
         bottom:0; left:0;
@@ -238,10 +266,10 @@ $secondary-color:#0033f6;
                 &[data-row="1"]{
                     background: $secondary-color;
                 }
-                &[data-row="3"]{
+                &[data-row="2"]{
                     background: $primary-color;
                 }
-                &[data-row="4"]{
+                &[data-row="3"]{
                     background: $secondary-color;
                 }
 
@@ -256,6 +284,61 @@ $secondary-color:#0033f6;
                 font-weight: bold;
                 padding: 2px;
                 font-size: 1.1em;
+            }
+
+        }
+        .simpleCaption{
+            position: absolute;
+            bottom: -25px;
+            width: 100%;
+            text-align: right;
+            font-family: "ABCsans";
+            color: $text-color;
+            padding: 5px;
+            @media (max-width:500px){
+                font-size: 25px;
+                font-weight: 900;
+                bottom: -50px;
+            }
+        }
+    }
+    .numberHolder{
+        
+        
+        color:$text-color;
+
+        width: 100%;
+        text-align: left;
+        font-weight: bold;
+        font-size: 40px;
+        z-index: 20;
+    }
+
+    .oz{
+    position: absolute; left:0;right:0;top:0;bottom:0;margin:auto;  
+    }
+
+    .Costs{
+
+        position: absolute;
+        bottom:0;
+        height:210px;
+        width:100%;
+        overflow: hidden;
+
+        .costRow{
+            @extend .numberHolder;
+            position: absolute;
+            bottom: 0;
+        }
+        .costResult{
+            @extend .numberHolder;
+            position: absolute;
+            .costBorder{
+                width:100%;
+                margin:0 auto;
+                top:0;left:0;right:0;
+                //border-top:1px solid #fff;
             }
 
         }

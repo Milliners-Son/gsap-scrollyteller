@@ -24,22 +24,60 @@ class Pixels extends Component {
        state.width = state.max*state.size;
        state.height = state.coords.length*state.size;
 
+
+        let pixelRow = (index,type,className,top,left,width,height,id)=>(
+            <div 
+            data-id={id}
+            data-pixel 
+            data-index={index} 
+            data-symbol={type} 
+            className={className} 
+            style={`top:${top}px;left:${left}px;width:${width}px;height:${height}px;`}
+            data-top={top}
+            data-left={left}
+        />)
+
+
+        let rows =[];
+
+        var i=0,j=0;
+
+        for(i in state.coords){
+
+            let y = i;
+            let top,left;
+
+
+            for(j in state.coords[i]){
+                let x = state.coords[i][j];
+
+                 if(x.length==2){
+
+                    let min = x[0];
+                    let max = x[1];
+                    let index = min;
+                    while(index<=max){
+                        top = y*state.size;
+                        left = index*state.size;
+                        rows.push(pixelRow(state.index++,state.type,styles.pixel,top,left,state.size,state.size,props.id));
+                        index++;
+                    }
+                    
+                } else{
+                    top = y*state.size;
+                    left = x*state.size;
+                    rows.push(pixelRow(state.index++,state.type,styles.pixel,top,left,state.size,state.size,props.id));
+                }
+            
+            }
+        }  
+
         return (
 
             <div style={`width:${state.width}px;height:${state.height}px;`} onClick={props.onClick} className={`${styles.holder} ${props.className}`} id={props.id}>
-                {state.coords.map(
-                    (row,y)=>
-                row.map((x)=>(
-                    <div 
-                        data-index={state.index++} 
-                        data-symbol={state.type} 
-                        className={styles.pixel} 
-                        style={`top:${y*state.size}px;left:${x*state.size}px;width:${state.size}px;height:${state.size}px;`}
-                    >
-                    </div>
-                )            
-                    ))
-            }
+                {props.children}
+
+                {rows}
             </div>
         );
     }

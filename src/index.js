@@ -1,6 +1,7 @@
 const { h, render, Component } = require('preact');
 
 let stage = document.querySelector(".scrollyteller-stage");
+require('arrive');
 
 //test
 if (stage) {

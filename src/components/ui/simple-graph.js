@@ -21,6 +21,7 @@ class SimpleGraph extends Component {
 
             <div class={styles.simpleGraph} id={props.id}>
                 {rows}
+                {props.label?(<div className={styles.simpleCaption}>{props.label}</div>):false}
             </div>
             
 
