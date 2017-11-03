@@ -431,11 +431,11 @@ let showTaxPaid = (index)=>{
   //Get consts
   const $dots = `[data-id="${IDS.TICK}"][data-index="1"],${rangeSelector(IDS.TICK,'data-index',3,100)}`;
   const $taxDot = `[data-id=${IDS.TICK}][data-pixel][data-index="2"]`;
-  const $floating = `[data-id=${IDS.TICK}][data-pixel][data-index="floating"]`;
+
 
   //Set inits
   section.set(ELS.LABELTAX,{top:235,left:103});
-  section.set($floating, {height:9,width:6,scaleY:0.24,left:129,top:0});
+
   section.set($taxDot,{scaleY:1});
 
   //Do to's
@@ -452,7 +452,7 @@ let showTaxPaid = (index)=>{
   section.to($taxDot,0.5,{scaleY:0.76},"1");
 
   section.to(ELS.LABELTAX,0.5,{autoAlpha:1},"1");
-  section.to($floating,1,{top:100,ease:Back.easeIn.config(1.7)},"1");
+
 
 
 

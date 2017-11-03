@@ -32,7 +32,6 @@ class Oz extends Component {
 
         return (
             <Pixels className={`${props.className}`} options={state} id={props.id}>
-            <div data-pixel className={styles.pixel}  data-index="floating"></div>
             </Pixels>
         );
     }

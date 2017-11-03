@@ -28,7 +28,6 @@ class Tick extends Component {
 
         return (
             <Pixels className={`${props.className}`} options={state} id={props.id}>
-            <div data-pixel className={styles.pixel}  data-index="floating" data-left="0" data-top="0" ></div>
             </Pixels>
         );
     }
