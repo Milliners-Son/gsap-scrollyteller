@@ -21,13 +21,15 @@ let setCurrent = (index)=>{
 let init = ()=>{
   const Frames = require('./frames.js');
 
+
+
   let indexCount = 0;
   master = new TimelineMax();
 
   // #markID0
   // Let's have a look...
   master.add(addLabel("Start"));
-  master.add(Frames.prepStage());
+  master.add(Frames.popOut());
 
   // #markID1
   // Take this pair of Nike shoes for example.
@@ -86,6 +88,11 @@ let init = ()=>{
   master.add(Frames.remove17Percent(indexCount++));
   master.add(addLabel("Remove $17"))
 
+  /*
+  master.add(Frames.removeTheRest(indexCount++));
+  master.add(addLabel("Remove the rest"));
+  */
+
 //#markID10
 // The money is for the Swoosh. It's for the bubble. (CHECK: Weird thing Nike has taken a patent out over) It's for things that Nike has taken one of x patents worldwide.
 // It means that for years Nike has been sending billions of dollars offshore, first to Bermuda then to the Netherlands.
@@ -114,7 +121,7 @@ master.add(addLabel("Show whole $100"));
 // After Nike has sent the $80 to the Netherlands, it costs about $18 to market and distribute and sell its shoes in Australia.
 // So there is only a very skinny profit left in Australia: $2 for that $100 shoe.
 master.add(Frames.remove80dollar(indexCount++));
-master.add(Frames.remove18dollar(indexCount++));
+master.add(Frames.remove18dollar(indexCount++),"-=1");
 master.add(addLabel("Remove $80"))
 
 
@@ -152,6 +159,9 @@ master.add(addLabel("Gross domestic product"))
   master.add(addLabel("End"));
   master.pause();
 
+  // let prepTL = new TimelineMax();
+  // prepTL.add(Frames.prepStage());
+  // prepTL.play();
 
   currentLabel = 0;
 

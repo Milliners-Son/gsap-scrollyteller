@@ -11,10 +11,11 @@ class Patents extends Component {
         super();
     }
     render(props,state) {
+        let max = 200;
         let patentArray = [];
         let j = 0;
 
-        while(j<50){
+        while(j<max){
             patentArray.push(<ImageHolder img={patentSVG} className={styles.patentBlank}/>);
             j++;
         }

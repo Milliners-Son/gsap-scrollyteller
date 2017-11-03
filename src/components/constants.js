@@ -22,7 +22,11 @@ const IDS={
     FRAME3:"frame_3_holder",
     FRAME4:"frame_4_holder",
     FRAME5:"frame_5_holder",
-    FRAMEPATENT:"frame_patent_holder"
+    FRAMEPATENT:"frame_patent_holder",
+    PATENTSWOOSH:"patent_swoosh_graphic",
+    PATENTBUBBLE:"patent_bubble_graphic",
+    LABEL2DOLLAR:"label_two_dollars",
+    LABELTAX:"label_tax"
   }
 
 module.exports = {IDS};

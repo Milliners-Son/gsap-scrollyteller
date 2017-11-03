@@ -15,7 +15,7 @@ let prepConstants = ()=>{
           ELS[`${key}`] = queryID(IDS[key]);
       }
     }
-  console.log(ELS);
+
 }
 //Prep timeline functions
 prepConstants();
@@ -31,6 +31,7 @@ let prepStage = ()=>{
 
     let hideArray = [
       ELS.DOLLAR_NUMBER,
+      ELS.DOLLARCOUNT,
       ELS.NETHERLAND_FLAG_ANI,
       ELS.AUS_FLAG_ANI,
       ELS.AUSTAX,
@@ -39,11 +40,13 @@ let prepStage = ()=>{
       ELS.FRAME3,
       ELS.FRAME4,
       ELS.FRAME5,
-      ELS.FRAMEPATENT
+      ELS.FRAMEPATENT,
+      ELS.LABEL2DOLLAR,
+      ELS.LABELTAX
     ];
  
-    let section = new TimelineMax({id:`START`});
-    console.log('prepstage()')
+    let section = new TimelineMax({id:`Prep stage`});
+    console.log('prepstage()');
     //Set
     section.set([ELS.SHOEHOLDER_FRONT,ELS.SHOEHOLDER_BACK],{scale:0.5,rotation:10,autoAlpha:0,bottom:100});
     section.set(ELS.SHOEHOLDER_FRONT,{left:50});
@@ -52,28 +55,34 @@ let prepStage = ()=>{
     section.set(`#${IDS.DOLLARCOUNT} [data-costrow]`,{autoAlpha:0,bottom:costPos("off")});
     section.set('[data-circlemask]',{scale:0});
 
-    section.add(circleTrans(ELS.FRAME1,ELS.FRAME1,true),"0");
-
-    //Set circleMasksBig
-    //section.set($(ELS.FRAME3).find('[data-circlemask]'),{scale:10});
-
     return section
+}
+let popOut = (index)=>{
+  let section = new TimelineMax({id:`Part ${index}`});
+  section.add(prepStage());
+  section.add(circleTrans(ELS.FRAME1,ELS.FRAME1,true),"0");
+  return section
 }
 let popIn = (index)=>{
 
   let section = new TimelineMax({id:`Part ${index}`});
   
-  
+
+
   section.set(ELS.FRAME1,{autoAlpha:1});
+
   let $circleMask = $(`[data-circlemask="${IDS.FRAME1}"]`);
-  console.log('circle:',$circleMask[0])
+
   section.set($circleMask[0],{scale:0});
-  console.log('popIn()', $circleMask);
+
+  
+  section.to(`#${IDS.DOLLARCOUNT}`,0.01,{autoAlpha:0}); 
   section.add(resetPixels(ELS.TICK,true),"0");
+  
   section.to(ELS.SHOEHOLDER_FRONT,1,{scale:1,autoAlpha:1,ease:Elastic.easeOut.config(1, 0.3)},"0");
   section.to(ELS.SHOEHOLDER_FRONT,0.5,{rotation:0,bottom:0,ease:Bounce.easeOut});
 
-  section.to(ELS.SHOEHOLDER_BACK,1,{scale:1,autoAlpha:1,ease:Elastic.easeOut.config(1, 0.3)},"-=1.3");
+  section.to(ELS.SHOEHOLDER_BACK,1,{scale:1,autoAlpha:1,ease:Elastic.easeOut.config(1, 0.3)},"0.3");
   section.to(ELS.SHOEHOLDER_BACK,0.6,{rotation:0,bottom:50,ease:Bounce.easeOut},"-=0.4");
 
   section.add(burst(IDS.BURST),"0");
@@ -89,11 +98,11 @@ let hideBackShoe = (index)=>{
 
 let hideFrontShoe = (index)=>{
   let section = new TimelineMax({id:`Part ${index}`});
-
+  
   section.to(ELS.TICK,0.5,{scale:1.8,right:"20%",top:0,ease: Power2.easeInOut},"0");
   section.to(ELS.SHOE_FRONT,0.5,{scale:0.8,ease: Power2.easeInOut},"0");
   section.to(ELS.SHOEMASK_FRONT,0.5,{scale:2,transformOrigin:"center center",ease: Power2.easeInOut},"0");
-  //section.to(ELS.DOLLAR_NUMBER,0.5,{autoAlpha:1},"0");
+  section.to(ELS.DOLLARCOUNT,0.1,{autoAlpha:1},"0");
   section.to(`#${IDS.DOLLARCOUNT} [data-costrow="0"]`,0.5,{autoAlpha:1,bottom:costPos(0)});
   
 
@@ -122,10 +131,11 @@ let remove20Percent = (index)=>{
 
 let showNethFlag = (index) =>{
   let section = new TimelineMax({id:`Part ${index}`});
-  section.set(ELS.FRAME1,{autoAlpha:0});
+  
   section.set(ELS.NETHERLAND_FLAG_ANI,{autoAlpha:1,top:"25%",width:"100%"});
   section.set(ELS.AUS_FLAG_ANI,{autoAlpha:1,left:"-150%",width:"40%"});
   section.add(circleTrans(ELS.FRAME2,ELS.FRAME1),"0");
+  section.to(ELS.FRAME1,0.5,{autoAlpha:0},"0");
 
   return section;
   
@@ -156,8 +166,8 @@ let showNethTax = (index)=>{
     section.set(ELS.FRAME1,{autoAlpha:0});
       //Show Neth Tax
     section.to(ELS.NETHTAX,1.5,{right:0,rotation:-360,
-        ease: Power4.easeOut},
-    "1");
+        ease: Power4.easeOut}
+      );
     return section;  
 }
 
@@ -206,7 +216,7 @@ let remove17Percent = (index)=>{
       0.01
     )
     section.to($dots,0.5,{autoAlpha:0})
-    
+
     //section.add(countNumber(44,27,IDS.DOLLAR_NUMBER),"0");
     section.to(`#${IDS.DOLLARCOUNT} [data-costrow="1"]`,0.5,{bottom:costPos(2),ease:Power2.easeInOut},"0");
     section.to(`#${IDS.DOLLARCOUNT} [data-costrow="2"]`,0.5,{bottom:costPos(1),ease:Power2.easeInOut},"0");
@@ -215,6 +225,35 @@ let remove17Percent = (index)=>{
     return section;
     
   }
+let removeTheRest = (index)=>{
+  let section = new TimelineMax({id:`Part ${index}`});
+
+  let attr = "data-index";
+  let $restOfDots = `
+  ${rangeSelector(IDS.OZ,attr,26,28)}, 
+  ${rangeSelector(IDS.OZ,attr,36,39)}, 
+  ${rangeSelector(IDS.OZ,attr,49,53)}, 
+  ${rangeSelector(IDS.OZ,attr,64,67)}, 
+  ${rangeSelector(IDS.OZ,attr,77,82)}, 
+  ${rangeSelector(IDS.OZ,attr,89,93)}
+  `;
+
+  section.staggerTo(
+    $restOfDots,
+    1,
+    {top:100,ease:Bounce.easeOut},
+    0.01
+  )
+
+  section.to(`#${IDS.DOLLARCOUNT} [data-costrow="1"]`,0.5,{bottom:costPos(3),ease:Power2.easeInOut},"0");
+  section.to(`#${IDS.DOLLARCOUNT} [data-costrow="2"]`,0.5,{bottom:costPos(2),ease:Power2.easeInOut},"0");
+  section.to(`#${IDS.DOLLARCOUNT} [data-costrow="3"]`,0.5,{bottom:costPos(1),ease:Power2.easeInOut},"0");
+  section.to(`#${IDS.DOLLARCOUNT} [data-costrow="6"]`,0.5,{autoAlpha:1,bottom:costPos(0),ease:Power2.easeInOut},"0");
+
+
+
+  return section;
+}
 let showPatents = (index)=>{
     let section = new TimelineMax({id:`Part ${index}`});
     section.add(circleTrans(ELS.FRAMEPATENT,ELS.FRAME1))
@@ -249,7 +288,7 @@ let showTaxGraph = (index)=>{
 
 let returnTo100 = (index,prev)=>{
   let section = new TimelineMax({id:`Part ${index}`});
-  console.log(prev,ELS[`FRAME${prev}`]);
+
   section.add(circleTrans(ELS.FRAME1,ELS[`FRAME${prev}`]));
   //section.add(countNumber(27,100,IDS.DOLLAR_NUMBER),"1");
   section.set(`#${IDS.DOLLARCOUNT} [data-costrow="1"]`,{autoAlpha:0,bottom:costPos("off")});
@@ -277,7 +316,7 @@ let remove80dollar = (index)=>{
   ${rangeSelector(IDS.TICK,attr,40,47)}, 
   ${rangeSelector(IDS.TICK,attr,51,100)} 
   `;
-  console.log(eightyDots);
+
   section.staggerTo(
     eightyDots   
     ,0.5,{left:"100%",top:"+10",autoAlpha:0},0.01,"0");
@@ -293,6 +332,10 @@ let remove80dollar = (index)=>{
 let remove18dollar = (index)=>{
   let section = new TimelineMax({id:`Part ${index}`});
   let $dots = rangeArray(IDS.TICK,'data-index',[1,3,4,8,12,13,14,26,27,28,36,37,38,39,48,49,50])
+
+  section.set(ELS.LABEL2DOLLAR,{top:295,left:226});
+
+
   //section.add(countNumber(20,2,IDS.DOLLAR_NUMBER),"0");
   section.to(`#${IDS.DOLLARCOUNT} [data-costrow="0"]`,0.5,{autoAlpha:1,bottom:costPos(2),ease:Power2.easeInOut},"0");
   section.to(`#${IDS.DOLLARCOUNT} [data-costrow="4"]`,0.5,{autoAlpha:1,bottom:costPos(1),ease:Power2.easeInOut},"0");
@@ -305,6 +348,10 @@ let remove18dollar = (index)=>{
     0.01
   )
   section.to($dots,0.5,{autoAlpha:0});
+
+ 
+  section.to(ELS.LABEL2DOLLAR,0.5,{autoAlpha:1},"0.5");
+
   return section;
 }
 let showProfitGraph = (index)=>{
@@ -369,30 +416,44 @@ let showCountryGraph = (index)=>{
 }
 let prepTaxFrame = (index)=>{
     let section = new TimelineMax({id:`Part ${index}`});
-    section.set(`#${IDS.DOLLARCOUNT} [data-costrow]`,{autoAlpha:0,bottom:costPos("off")});
-    section.set(`#${IDS.DOLLARCOUNT} [data-costrow="0"]`,{autoAlpha:1,bottom:costPos(0)});
-    section.add(returnTo100("x",4));
+
+    section.to(ELS.LABEL2DOLLAR,0.1,{autoAlpha:0},"0");
+    section.to(`#${IDS.DOLLARCOUNT} [data-costrow]`,0.1,{autoAlpha:0,bottom:costPos("off")},"0");
+    section.to(`#${IDS.DOLLARCOUNT} [data-costrow="0"]`,0.1,{autoAlpha:1,bottom:costPos(0)},"0");
+
+    section.add(returnTo100("return to 100 ",4),"0.1");
+
     return section;
 }
 let showTaxPaid = (index)=>{
   let section = new TimelineMax({id:`Part ${index}`});
-  let $dots = `[data-id="${IDS.TICK}"][data-index="1"],${rangeSelector(IDS.TICK,'data-index',3,100)}`;
-  
+
+  //Get consts
+  const $dots = `[data-id="${IDS.TICK}"][data-index="1"],${rangeSelector(IDS.TICK,'data-index',3,100)}`;
+  const $taxDot = `[data-id=${IDS.TICK}][data-pixel][data-index="2"]`;
+  const $floating = `[data-id=${IDS.TICK}][data-pixel][data-index="floating"]`;
+
+  //Set inits
+  section.set(ELS.LABELTAX,{top:235,left:103});
+  section.set($floating, {height:9,width:6,scaleY:0.24,left:129,top:0});
+  section.set($taxDot,{scaleY:1});
+
+  //Do to's
   section.staggerTo(
     $dots,
     1,
     {top:100,ease:Bounce.easeOut},
     0.01
   )
-  let $taxDot = `[data-id=${IDS.TICK}][data-pixel][data-index="2"]`;
-  let $floating = `[data-id=${IDS.TICK}][data-pixel][data-index="floating"]`;
+
   
-  section.to($taxDot,1,{left:129,ease:Power2.easeInOut},"-=0.5");
-  section.to($dots,1,{autoAlpha:0},"-=1");
-  section.set($floating, {height:9,width:6,scaleY:0.24,left:129,top:0})
-  section.set($taxDot,{scaleY:1});
-  section.to($taxDot,0.5,{scaleY:0.76});
-  section.to($floating,1,{top:100,ease:Back.easeIn.config(1.7)},"-=0.5");
+  section.to($taxDot,1,{left:129,ease:Power2.easeInOut},"0.5");
+  section.to($dots,1,{autoAlpha:0},"1");
+  section.to($taxDot,0.5,{scaleY:0.76},"1");
+
+  section.to(ELS.LABELTAX,0.5,{autoAlpha:1},"1");
+  section.to($floating,1,{top:100,ease:Back.easeIn.config(1.7)},"1");
+
 
 
   return section;
@@ -405,6 +466,35 @@ let showOz = (index)=>{
     return section;
 }
 let showDomesticProduct = (index)=>{
+  let section = new TimelineMax({id:`Part ${index}`});
+
+  //   let $quarterDots = rangeSelector(IDS.OZ,'data-index',1,25);
+  let attr = "data-index";
+  let dist = 100;
+  let size = 0.1;
+  let time = 1.5;
+  let offset = "-=1.3";
+
+
+  let topLeft =     {top:`-=${dist}`, left:`-=${dist}`,scale:size,autoAlpha:0,ease:Back.easeIn,transformOrigin:"center center"};
+  let topRight =    {top:`-=${dist}`, left:`+=${dist}`,scale:size,autoAlpha:0,ease:Back.easeIn,transformOrigin:"center center"};
+  let bottomLeft =  {top:`+=${dist}`, left:`-=${dist}`,scale:size,autoAlpha:0,ease:Back.easeIn,transformOrigin:"center center"};
+  let bottomRight = {top:`+=${dist}`, left:`+=${dist}`,scale:size,autoAlpha:0,ease:Back.easeIn,transformOrigin:"center center"};
+
+  section.to(`#${IDS.OZ} [data-index="4"]`,time,topLeft,offset);
+  section.to(`#${IDS.OZ} [data-index="24"]`,time,topRight,offset);
+  section.to(`#${IDS.OZ} [data-index="26"]`,time,topLeft,offset);
+  section.to(`#${IDS.OZ} [data-index="63"]`,time,topRight,offset);
+  section.to(`#${IDS.OZ} [data-index="100"]`,time,topRight,offset);
+  section.to(`#${IDS.OZ} [data-index="101"]`,time,bottomLeft,offset);
+  section.to(`#${IDS.OZ} [data-index="106"]`,time,bottomRight,offset);
+  section.to(`#${IDS.OZ} [data-index="127"]`,time,bottomRight,offset);
+  section.to(`#${IDS.OZ} [data-index="129"]`,time,bottomLeft,offset);
+  section.to(`#${IDS.OZ} [data-index="132"]`,time,bottomRight,offset);
+
+  return section;
+}
+let showQuarterOz = (index)=>{
   let section = new TimelineMax({id:`Part ${index}`});
 
 //   let $quarterDots = rangeSelector(IDS.OZ,'data-index',1,25);
@@ -425,6 +515,7 @@ section.staggerTo($quarterDots,2,{top:"-=10", left:"+=10" ,scale:"0.8",backgroun
 
 module.exports = {
     prepStage,
+    popOut,
     popIn,
     hideBackShoe,
     hideFrontShoe,
@@ -435,6 +526,7 @@ module.exports = {
     returnToCosting,
     remove36Percent,
     remove17Percent,
+    removeTheRest,
     showPatents,
     showTaxGraph,
     returnTo100,

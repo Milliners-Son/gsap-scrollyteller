@@ -12,12 +12,14 @@ const Tick = require('./images/tick.js');
 const Oz = require('./images/australia-map.js');
 const ImageHolder = require('./images/images-holder.js');
 const Burst = require('./images/burst.js');
-const AniButton = require('./ui/ani-button.js');
 const Coin = require('./images/coin.js');
+const Patents = require('./images/patents-blank.js');
+
 const AniFrame = require('./ui/animation-frame.js');
 const SimpleGraph = require('./ui/simple-graph.js');
 const Costs = require('./ui/costs-holder.js');
-const Patents = require('./images/patents-blank.js');
+const AniButton = require('./ui/ani-button.js');
+const Label = require('./ui/label.js');
 
 //Static Images
 let shoePNG = require('./static/pixel-shoe-solo.png');
@@ -74,12 +76,13 @@ class App extends Component {
           
           <Costs id={IDS.DOLLARCOUNT}
           rows={[
-            <span>$100 (approx wholesale on shoe)</span>,
-            "$80 (to Netherlands)",
-            "- $36 (est production)",
-            "- $17 (to Nike Innovate CV)",
-            "- $80 (to Netherlands)",
-            "- $18 (marketing and distribution)"
+            <span>$100 <em>(wholesale)</em></span>,
+            <span>$80 <em>(to the Netherlands)</em></span>,
+            <span>- $36 <em>(production)</em></span>,
+            <span>- $17 <em>(to Nike Global Trading BV)</em></span>,
+            <span>- $80 <em>(to the Netherlands)</em></span>,
+            <span>- $18 <em>(marketing &amp; distribution)</em></span>,
+            <span>- the rest <em>(Nike Innovate CV)</em></span>
           ]}
 
           />
@@ -96,7 +99,8 @@ class App extends Component {
             <div className={styles.shoeMask} id={IDS.SHOEMASK_BACK} />
             <ImageHolder id={IDS.SHOE_BACK} className={styles.shoeBack} img={shoePNG}/>
           </div>
-
+          <Label id={IDS.LABEL2DOLLAR} label="$2 profit" dir="left"/>
+          <Label id={IDS.LABELTAX} label="89c tax" dir="right"/>
         </AniFrame>
 
 
@@ -110,21 +114,33 @@ class App extends Component {
         </AniFrame>
 
         <AniFrame id={IDS.FRAMEPATENT} >
-        <ImageHolder id={IDS.PATENTSWOOSH} img={patentSwoosh} className={styles.patentSwoosh}/>
-        <ImageHolder id={IDS.PATENTBUBBLE} img={patentBubble} className={styles.patentBubble}/>
-        <Patents id={IDS.PATENTSBLANK} className={styles.patentHolder} />
+          <ImageHolder id={IDS.PATENTSWOOSH} img={patentSwoosh} className={styles.patentSwoosh}/>
+          <ImageHolder id={IDS.PATENTBUBBLE} img={patentBubble} className={styles.patentBubble}/>
+          {/*<Patents id={IDS.PATENTSBLANK} className={styles.patentHolder} />*/}
 
         </AniFrame>
         <AniFrame id={IDS.FRAME3} >
           
-          <SimpleGraph id={IDS.TAXGRAPH} rows={[<span>Revenue<br />($12.2b)</span>,<span>Tax<br />($170.8m)</span>]}  label="Revenue made & tax paid in the Netherlands" />
+          <SimpleGraph id={IDS.TAXGRAPH} 
+            rows={[<span>Profit<br />($12.2b)</span>,<span>Tax<br />($171m)</span>]}  
+            label="Revenue made &amp; tax paid in the Netherlands" 
+            scale={["0","$12.2b"]}
+          />
 
         </AniFrame>
 
         <AniFrame id={IDS.FRAME4} >
           
-          <SimpleGraph id={IDS.REVENUEGRAPH} rows={[<span>Revenue<br />($500m)</span>,<span>Profit<br />($11m)</span>]} label="Nike Australia - Revenue & profit 2016" />
-          <SimpleGraph id={IDS.PROFITGRAPH} rows={[<span>WHOLESALE<br />($100)</span>,<span>US Profit<br />($14)</span>,<span>AU Profit<br />($2)</span>]}  label="Profit made on $100 in Australia and USA"/>
+          <SimpleGraph id={IDS.REVENUEGRAPH} 
+            rows={[<span>Revenue<br />($500m)</span>,<span>Profit<br />($11m)</span>]} 
+            label="Nike Australia - Revenue & profit 2016" 
+            scale={["0","$500m"]}
+          />
+          <SimpleGraph id={IDS.PROFITGRAPH} 
+            rows={[<span>Wholesale<br />($100)</span>,<span>US Profit<br />($14)</span>,<span>AU Profit<br />($2)</span>]}  
+            label="Profit made on $100 in Australia and USA"
+            scale={["0","$100"]}
+          />
 
         </AniFrame>
 

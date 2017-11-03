@@ -17,11 +17,18 @@ class SimpleGraph extends Component {
             </div>
             )
         }
+        let scale = [];
+        let i = 1;
+        for(i in props.scale){
+            let scaleVar = 100/(props.scale.length-1);
+            scale.push(<div style={`left:${scaleVar*i}%`} className={styles.simpleScaleLabel} >{props.scale[i]}</div>);
+        }
         return (
 
             <div class={styles.simpleGraph} id={props.id}>
                 {rows}
                 {props.label?(<div className={styles.simpleCaption}>{props.label}</div>):false}
+                <div className={styles.simpleScale}>{scale}</div>
             </div>
             
 
