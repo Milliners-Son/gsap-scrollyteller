@@ -6,7 +6,7 @@ class Pixels extends Component {
     constructor(){
         super();
         this.state = {
-            coords:[[1,2,3],[1,2,3],[1,2,3]],
+            coords:[[1,2,3],[[1,3]],[1,2,3]],
             size:'1',
             type:'default',
             max:'3',
@@ -76,7 +76,6 @@ class Pixels extends Component {
 
             <div style={`width:${state.width}px;height:${state.height}px;`} onClick={props.onClick} className={`${styles.holder} ${props.className}`} id={props.id}>
                 {props.children}
-
                 {rows}
             </div>
         );

@@ -9,7 +9,7 @@ let initAni = false;
 
 let addLabel = (label)=>{
   aniLabels.push(label);
-  console.log(`[${label}] added to queue`)
+  //console.log(`[${label}] added to queue`)
   return label;
 }
 let setCurrent = (index)=>{
@@ -175,14 +175,14 @@ function pause(){
 
 let play = (index) =>{
   //if(!initAni) init();
-  console.log(index,currentLabel,aniLabels);
+
 
   if(index!= currentLabel){
     let first,next;
     first = aniLabels[currentLabel];
     next = aniLabels[index];
 
-    console.log("tweenFromTo()",currentLabel,first,next);
+
     let timeScale = (first<next?1:3);
     master.timeScale(timeScale).tweenFromTo(first,next);
     currentLabel = index;
@@ -191,7 +191,7 @@ let play = (index) =>{
 
 let playFrame = (current,prev)=>{
   let prevID = (prev?prev:0);
-  console.log('playframe',current,prev);
+
   let first = aniLabels[prevID];
   let next = aniLabels[current];
 

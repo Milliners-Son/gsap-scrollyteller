@@ -11,7 +11,7 @@ let prepConstants = ()=>{
 
   for (var key in IDS) {
       if (IDS.hasOwnProperty(key)) {
-          console.log(key + " -> " + IDS[key]);
+          //console.log(key + " -> " + IDS[key]);
           ELS[`${key}`] = queryID(IDS[key]);
       }
     }
@@ -46,7 +46,7 @@ let prepStage = ()=>{
     ];
  
     let section = new TimelineMax({id:`Prep stage`});
-    console.log('prepstage()');
+
     //Set
     section.set([ELS.SHOEHOLDER_FRONT,ELS.SHOEHOLDER_BACK],{scale:0.5,rotation:10,autoAlpha:0,bottom:100});
     section.set(ELS.SHOEHOLDER_FRONT,{left:50});
@@ -133,7 +133,12 @@ let showNethFlag = (index) =>{
   let section = new TimelineMax({id:`Part ${index}`});
   
   section.set(ELS.NETHERLAND_FLAG_ANI,{autoAlpha:1,top:"25%",width:"100%"});
-  section.set(ELS.AUS_FLAG_ANI,{autoAlpha:1,left:"-150%",width:"40%"});
+  section.set(ELS.AUS_FLAG_ANI,{autoAlpha:0,left:"-150%",width:"40%"});
+
+  section.set(ELS.AUSTAX,{autoAlpha:0,left:"-50%"});
+
+  section.set(ELS.NETHTAX,{autoAlpha:0,right:"-50%"});
+
   section.add(circleTrans(ELS.FRAME2,ELS.FRAME1),"0");
   section.to(ELS.FRAME1,0.5,{autoAlpha:0},"0");
 
@@ -144,14 +149,14 @@ let showNethFlag = (index) =>{
 let showAusTax = (index)=>{
   let section = new TimelineMax({id:`Part ${index}`});
   section.set(ELS.FRAME1,{autoAlpha:0});
-  section.set(ELS.AUSTAX,{autoAlpha:1,left:"-50%",ease:Power2.easeInOut});
-  section.set(ELS.NETHTAX,{autoAlpha:1,right:"-50%"});
+  section.set(ELS.AUSTAX,{autoAlpha:0});
   
   //Flags
   section.to(ELS.AUS_FLAG_ANI,0.5,{autoAlpha:1,left:"0%",right:"50%"});
   section.to(ELS.NETHERLAND_FLAG_ANI,0.5,{left:"50%",width:"40%",top:"0%",ease:Power2.easeInOut},"0");
   
   //Show Oz tax
+  section.to(ELS.AUSTAX,0.3,{autoAlpha:1},"0");
   section.to(ELS.AUSTAX,1.5,{left:0,rotation:360,
     ease: Power4.easeOut},
   "0");
@@ -162,11 +167,17 @@ let showAusTax = (index)=>{
 }
 
 let showNethTax = (index)=>{
+
     let section = new TimelineMax({id:`Part ${index}`});
     section.set(ELS.FRAME1,{autoAlpha:0});
+
+    section.set(ELS.NETHTAX,{autoAlpha:0,right:"-50%"});
+
+    section.to(ELS.NETHTAX,0.3,{autoAlpha:1},"0");
+    
       //Show Neth Tax
     section.to(ELS.NETHTAX,1.5,{right:0,rotation:-360,
-        ease: Power4.easeOut}
+        ease: Power4.easeOut},"0"
       );
     return section;  
 }
@@ -356,7 +367,7 @@ let remove18dollar = (index)=>{
 }
 let showProfitGraph = (index)=>{
   let section = new TimelineMax({id:`Part ${index}`});
-  section.set(ELS.PROFITGRAPH,{autoAlpha:0,bottom:"30px"});
+  section.set(ELS.PROFITGRAPH,{autoAlpha:0,bottom:"40px"});
   section.set(ELS.REVENUEGRAPH,{bottom:"25%"});
   section.set(`#${IDS.PROFITGRAPH} [data-row]`,{width:"0%"});
 
@@ -382,8 +393,6 @@ let showProfitGraph = (index)=>{
 }
 let showCountryGraph = (index)=>{
   let section = new TimelineMax({id:`Part ${index}`});
-  section.to(ELS.REVENUEGRAPH,0.7,{bottom:"70%",ease:Power2.easeInOut})
-  section.to(ELS.PROFITGRAPH,0.7,{autoAlpha:1,ease:Power2.easeIn},"0");
 
   let $total = document.querySelector(`#${IDS.PROFITGRAPH} [data-row="0"]`);
   let $aus = document.querySelector(`#${IDS.PROFITGRAPH} [data-row="2"]`);
@@ -393,9 +402,11 @@ let showCountryGraph = (index)=>{
   let $ausLabel =  document.querySelector(`#${IDS.PROFITGRAPH} [data-row="2"] [data-label]`);
   let $usaLabel = document.querySelector(`#${IDS.PROFITGRAPH} [data-row="1"] [data-label]`);
 
-
   section.set([$total,$aus,$usa],{width:"0%"});
   section.set([$totalLabel,$ausLabel,$usaLabel],{autoAlpha:0});
+
+  section.to(ELS.REVENUEGRAPH,0.7,{bottom:"67%",ease:Power2.easeInOut})
+  section.to(ELS.PROFITGRAPH,0.7,{autoAlpha:1,ease:Power2.easeIn},"0");
 
   let total = 100;
   let auProfit = 2;
@@ -452,7 +463,7 @@ let showTaxPaid = (index)=>{
   section.to($taxDot,0.5,{scaleY:0.76},"1");
 
   section.to(ELS.LABELTAX,0.5,{autoAlpha:1},"1");
-
+  section.to(`#${IDS.DOLLARCOUNT} [data-costrow="0"]`,0.5,{autoAlpha:1,bottom:costPos("off")},"0");
 
 
 
