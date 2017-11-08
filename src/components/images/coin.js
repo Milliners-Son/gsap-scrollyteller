@@ -1,5 +1,5 @@
 const { h, Component } = require('preact');
-const ImageHolder = require('./images-holder.js');
+const ImageHolder = require('../templates/image-holder');
 const coinPNGs = [require('../static/coin-half.png'),require('../static/coin-bit.png')];
 const styles = require('../scss/animation.scss');
 

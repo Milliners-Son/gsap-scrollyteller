@@ -1,6 +1,6 @@
 const { h, Component } = require('preact');
 
-const ImageHolder = require('./images-holder.js');
+const ImageHolder = require('../templates/image-holder');
 const patentSVG = require('../static/patent.svg');
 const styles = require('../scss/animation.scss');
 

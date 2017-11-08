@@ -8,18 +8,18 @@ const TM = TweenMax;
 const styles = require('./scss/animation.scss');
 
 //Components
-const Tick = require('./images/tick.js');
-const Oz = require('./images/australia-map.js');
-const ImageHolder = require('./images/images-holder.js');
-const Burst = require('./images/burst.js');
-const Coin = require('./images/coin.js');
-const Patents = require('./images/patents-blank.js');
+const Tick = require('./images/tick');
+const Oz = require('./images/australia-map');
+const Burst = require('./images/burst');
+const Coin = require('./images/coin');
+const Patents = require('./images/patents-blank');
 
-const AniFrame = require('./ui/animation-frame.js');
-const SimpleGraph = require('./ui/simple-graph.js');
-const Costs = require('./ui/costs-holder.js');
-const AniButton = require('./ui/ani-button.js');
-const Label = require('./ui/label.js');
+const ImageHolder = require('./templates/image-holder');
+
+const AniFrame = require('./ui/animation-frame');
+const SimpleGraph = require('./ui/simple-graph');
+const Costs = require('./ui/costs-holder');
+const Label = require('./ui/label');
 
 //Static Images
 let shoePNG = require('./static/pixel-shoe-solo.png');
@@ -29,14 +29,16 @@ let ausFlag = require('./static/australian_flag_ani.gif');
 let patentSwoosh = require('./static/patent-swoosh.png');
 let patentBubble = require('./static/patent-bubble.png');
 //Libs
-const animation = require('../animation/animation.js');
+const animation = require('../animation/animation');
 
-const {IDS} = require('../components/constants.js');
+const {IDS} = require('../components/constants');
 
-let hasYetToInit = true;   
+let hasYetToInit = true;
+
 class App extends Component {
   
   componentDidMount(){
+
     if(hasYetToInit){
       animation.init();
       document.addEventListener('mark', tick);
@@ -52,14 +54,10 @@ class App extends Component {
       }
       hasYetToInit = false;
     }
- 
   }
 
   render() {
-    let frameArray = [0,1,2,3,4,5,6,7,8];
-    let resizeForMob = ()=>{
-      $(`.${styles.canvas}`).css({"transform":"matrix(0.5, 0, 0, 0.5, -168, -140)"});
-    }
+
     return (
       <div className={styles.body}>
 
@@ -68,12 +66,12 @@ class App extends Component {
         <div className={styles.canvas}>
 
 
-
+        {/* Frame 1 holder */}
         <AniFrame id={IDS.FRAME1} >
           
           <Burst id={IDS.BURST}/> 
 
-          
+          {/* Money count holder*/}
           <Costs id={IDS.DOLLARCOUNT}
           rows={[
             <span>$100 <em>(wholesale)</em></span>,
@@ -84,10 +82,9 @@ class App extends Component {
             <span>- $18 <em>(marketing &amp; distribution)</em></span>,
             <span>- the rest <em>(Nike Innovate CV)</em></span>
           ]}
-
           />
 
-
+          {/* Shoe back */}
           <div className={`${styles.shoeHolder} ${styles.shoeHolderFront}`} id={IDS.SHOEHOLDER_FRONT}>
 
             <Tick id={IDS.TICK} className={styles.tick}/>
@@ -95,15 +92,19 @@ class App extends Component {
             <ImageHolder id={IDS.SHOE_FRONT} img={shoePNG}/>
           </div>
 
+          {/* Shoe front (includes TICK) */}
           <div className={`${styles.shoeHolder} ${styles.shoeHolderBack}`} id={IDS.SHOEHOLDER_BACK}>
             <div className={styles.shoeMask} id={IDS.SHOEMASK_BACK} />
             <ImageHolder id={IDS.SHOE_BACK} className={styles.shoeBack} img={shoePNG}/>
           </div>
+
+          {/* Dot labels */}
           <Label id={IDS.LABEL2DOLLAR} label="$2 profit" dir="left"/>
           <Label id={IDS.LABELTAX} label="89c tax" dir="right"/>
+
         </AniFrame>
 
-
+        {/* Frame 2 Coin and flag animations */}
         <AniFrame id={IDS.FRAME2} >
           
           <ImageHolder id={IDS.NETHERLAND_FLAG_ANI} img={nethFlagAni} className={styles.netherlandsFlag}/>
@@ -119,23 +120,29 @@ class App extends Component {
           {/*<Patents id={IDS.PATENTSBLANK} className={styles.patentHolder} />*/}
 
         </AniFrame>
+
+        {/* Frame 3 - Graph (Tax paid in the Netherlands) */}
         <AniFrame id={IDS.FRAME3} >
           
           <SimpleGraph id={IDS.TAXGRAPH} 
             rows={[<span>Profit<br />($12.2b)</span>,<span>Tax<br />($171m)</span>]}  
-            label="Revenue made &amp; tax paid in the Netherlands" 
+            label="Profit made &amp; tax paid in the Netherlands" 
             scale={["0","$12.2b"]}
           />
 
         </AniFrame>
 
+        {/* Frame 4 */}
         <AniFrame id={IDS.FRAME4} >
-          
+
+          {/* Graph (Revenue vs Profit) */}
           <SimpleGraph id={IDS.REVENUEGRAPH} 
             rows={[<span>Revenue<br />($500m)</span>,<span>Profit<br />($11m)</span>]} 
             label="Nike Australia - Revenue & profit 2016" 
             scale={["0","$500m"]}
           />
+
+          {/* Graph (AU profit vs US profit) */}
           <SimpleGraph id={IDS.PROFITGRAPH} 
             rows={[<span>Wholesale<br />($100)</span>,<span>US Profit<br />($14)</span>,<span>AU Profit<br />($2)</span>]}  
             label="Profit made on $100 in Australia and USA"
@@ -145,17 +152,11 @@ class App extends Component {
         </AniFrame>
 
         <AniFrame id={IDS.FRAME5}>
+          {/* Graph (Australia dots) */}
           <Oz id={IDS.OZ} className={styles.oz} />
         </AniFrame>
         </div>
-        
 
-        
-
-        {/* <div className={styles.aniButtonHolder}>
-            {  frameArray.map((num)=><AniButton className={styles.anibutton} onClick={()=>animation.play(num)} label={num}/>) }
-            <AniButton className={styles.anibutton} onClick={()=>resizeForMob()} label={"RESIZE FOR MOB"}/>
-        </div> */}
       </div>
     );
   }

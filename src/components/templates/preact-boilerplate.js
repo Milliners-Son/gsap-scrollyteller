@@ -1,8 +1,9 @@
 const { h, Component } = require('preact');
 
-class COMP extends Component {
+class OBJ extends Component {
 
     constructor(){
+        super();
     }
     render(props,state) {
 
@@ -11,4 +12,4 @@ class COMP extends Component {
         );
     }
 }
-module.exports = COMP;
+module.exports = OBJ;

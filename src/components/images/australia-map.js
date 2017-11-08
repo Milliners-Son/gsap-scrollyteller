@@ -1,5 +1,5 @@
 const { h, Component } = require('preact');
-const Pixels = require('./pixelart.js');
+const Pixels = require('../templates/pixelart');
 const styles = require('../scss/pixelart.scss');
 
 
