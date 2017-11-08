@@ -255,15 +255,15 @@ let removeTheRest = ()=>{
   section.to(costRow(3),0.5,{bottom:costPos(1),ease:Power2.easeInOut},"0");
   section.to(costRow(6),0.5,{autoAlpha:1,bottom:costPos(0),ease:Power2.easeInOut},"0");
 
-
-
   return section;
 }
+
 let showPatents = ()=>{
     let section = new TimelineMax();
     section.add(circleTrans(ELS.FRAMEPATENT,ELS.FRAME1))
     return section;
 }
+
 let showTaxGraph = ()=>{
 
 
@@ -274,6 +274,7 @@ let showTaxGraph = ()=>{
 
   let $revenueLabel = document.querySelector(`#${IDS.TAXGRAPH} [data-row="0"] [data-label]`)
   let $taxLabel =  document.querySelector(`#${IDS.TAXGRAPH} [data-row="1"] [data-label]`)
+
   section.set(ELS.TAXGRAPH,{bottom:"25%"});
   section.set([$revenue,$tax],{width:"0%"});
   section.set([$revenueLabel,$taxLabel],{autoAlpha:0});
@@ -498,19 +499,19 @@ let showDomesticProduct = ()=>{
 }
 let showQuarterOz = ()=>{
 
-let section = new TimelineMax();
+  let section = new TimelineMax();
 
-let attr = "data-index";
-let $quarterDots = `
-${rangeSelector(IDS.OZ,attr,2,2)}, 
-${rangeSelector(IDS.OZ,attr,6,6)}, 
-${rangeSelector(IDS.OZ,attr,12,14)}, 
-${rangeSelector(IDS.OZ,attr,21,24)}, 
-${rangeSelector(IDS.OZ,attr,33,37)}, 
-${rangeSelector(IDS.OZ,attr,47,52)}, 
-${rangeSelector(IDS.OZ,attr,62,68)}
-`;
-section.staggerTo($quarterDots,2,{top:"-=10", left:"+=10" ,scale:"0.8",backgroundColor:"#fff",ease:Elastic.easeOut},0.01);
+  let attr = "data-index";
+  let $quarterDots = `
+  ${rangeSelector(IDS.OZ,attr,2,2)}, 
+  ${rangeSelector(IDS.OZ,attr,6,6)}, 
+  ${rangeSelector(IDS.OZ,attr,12,14)}, 
+  ${rangeSelector(IDS.OZ,attr,21,24)}, 
+  ${rangeSelector(IDS.OZ,attr,33,37)}, 
+  ${rangeSelector(IDS.OZ,attr,47,52)}, 
+  ${rangeSelector(IDS.OZ,attr,62,68)}
+  `;
+  section.staggerTo($quarterDots,2,{top:"-=10", left:"+=10" ,scale:"0.8",backgroundColor:"#fff",ease:Elastic.easeOut},0.01);
 
   return section;
 }

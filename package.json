@@ -1,6 +1,6 @@
 {
-  "name": "shoe-animation",
-  "version": "0.0.2",
+  "name": "gsap-shoe-animation",
+  "version": "1.0.0",
   "description": "An animated scrolly teller using Greensock and Preact",
   "license": "MIT",
   "private": true,

@@ -1,6 +1,8 @@
-# shoe-animation
+# gsap-shoe-animation
 
 A project generated from [aunty](https://github.com/abcnews/aunty)'s `preact-app` template.
+
+A Scrolly-teller animation using GreenSock animation plugin
 
 ## Authors
 

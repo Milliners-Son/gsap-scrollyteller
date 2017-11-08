@@ -9,13 +9,8 @@ let initAni = false;
 
 let addLabel = (label)=>{
   aniLabels.push(label);
-  //console.log(`[${label}] added to queue`)
   return label;
 }
-let setCurrent = (index)=>{
-  currentLabel = index;
-}
-
 
 //TIMELINE
 let init = ()=>{
@@ -87,11 +82,6 @@ let init = ()=>{
   master.add(Frames.remove17Percent());
   master.add(addLabel("Remove $17"))
 
-  /*
-  master.add(Frames.removeTheRest());
-  master.add(addLabel("Remove the rest"));
-  */
-
 //#markID10
 // The money is for the Swoosh. It's for the bubble. (CHECK: Weird thing Nike has taken a patent out over) It's for things that Nike has taken one of x patents worldwide.
 // It means that for years Nike has been sending billions of dollars offshore, first to Bermuda then to the Netherlands.
@@ -155,26 +145,16 @@ master.add(Frames.showDomesticProduct());
 master.add(addLabel("Gross domestic product"))
 
   
-  master.add(addLabel("End"));
-  master.pause();
+master.add(addLabel("End"));
+master.pause();
 
-  // let prepTL = new TimelineMax();
-  // prepTL.add(Frames.prepStage());
-  // prepTL.play();
 
-  currentLabel = 0;
-
-  initAni = true;
+currentLabel = 0;
+initAni = true;
 
 }
-function pause(){
-  master.pause();  
-}  
-
 
 let play = (index) =>{
-  //if(!initAni) init();
-
 
   if(index!= currentLabel){
     let first,next;

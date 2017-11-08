@@ -5,6 +5,9 @@ const {IDS} = require('../components/constants.js');
 //UTILS
 
 //ANIMATION SNIPPETS
+
+//Do a burst
+//(Probably should be in FRAMES)
 let burst = (id)=>{
   let snippet = new TimelineMax;
   snippet.set(`#${id}`,{scale:0.8,autoAlpha:0})
@@ -15,7 +18,7 @@ let burst = (id)=>{
   return snippet;
 }
 
-
+//Transition from one frame to another
 let circleTrans = (show,hide,quick)=>{
   let snippet = new TimelineMax;
   let time = (quick?0.01:0.5);
@@ -31,7 +34,7 @@ let circleTrans = (show,hide,quick)=>{
 
 }
 
-
+//Count up a number
 let countNumber = (from,to,container)=>{
   let number = {count:from};
   let countSection = new TimelineMax();
@@ -45,6 +48,8 @@ let countNumber = (from,to,container)=>{
   return countSection;
 
 }
+
+//Create a grid of dots
 let createGrid = (id,index,min,max,width,height)=>{
   let snippet = new TimelineMax({id:`Create Grid ${index}`});
   let j = min;
@@ -72,6 +77,8 @@ let createGrid = (id,index,min,max,width,height)=>{
   }
   return snippet
 }
+
+//Reset pixels (uses Jquer)
 let resetPixels = (holder,quick)=>{
   let snippet = new TimelineMax({id:`Reset Pixels ${holder}`});
   let time = (quick?0.1:0.5);
