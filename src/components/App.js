@@ -4,7 +4,11 @@ import {TweenMax, Power2, TimelineLite,TimelineMax} from "gsap";
 const TL = TweenLite;
 const TM = TweenMax;
 
+//Libs
+const animation = require('../animation/animation');
+const {IDS} = require('../components/constants');
 
+//STYLES
 const styles = require('./scss/animation.scss');
 
 //Components
@@ -21,17 +25,8 @@ const SimpleGraph = require('./ui/simple-graph');
 const Costs = require('./ui/costs-holder');
 const Label = require('./ui/label');
 
-//Static Images
-let shoePNG = require('./static/pixel-shoe-solo.png');
-let nethFlagAni = require('./static/netherland_flag_ani.gif');
-let ausFlag = require('./static/australian_flag_ani.gif');
 
-let patentSwoosh = require('./static/patent-swoosh.png');
-let patentBubble = require('./static/patent-bubble.png');
-//Libs
-const animation = require('../animation/animation');
 
-const {IDS} = require('../components/constants');
 
 let hasYetToInit = true;
 
@@ -41,8 +36,9 @@ class App extends Component {
 
     if(hasYetToInit){
       animation.init();
-      document.addEventListener('mark', tick);
-      function tick(ev){
+      document.addEventListener('mark', markEvent);
+
+      function markEvent(ev){
         let next = ev.detail.activated.config.id;
         let prev;
         try{
@@ -57,6 +53,15 @@ class App extends Component {
   }
 
   render() {
+
+    //Static Images
+    let shoePNG = require('./static/pixel-shoe-solo.png');
+    let nethFlagAni = require('./static/netherland_flag_ani.gif');
+    let ausFlag = require('./static/australian_flag_ani.gif');
+
+    let patentSwoosh = require('./static/patent-swoosh.png');
+    let patentBubble = require('./static/patent-bubble.png');
+
 
     return (
       <div className={styles.body}>
