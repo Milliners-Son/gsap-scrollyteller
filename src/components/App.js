@@ -119,11 +119,10 @@ class App extends Component {
 
         </AniFrame>
 
+          {/* Frame Patents - Patents */}
         <AniFrame id={IDS.FRAMEPATENT} >
           <ImageHolder id={IDS.PATENTSWOOSH} img={patentSwoosh} className={styles.patentSwoosh}/>
           <ImageHolder id={IDS.PATENTBUBBLE} img={patentBubble} className={styles.patentBubble}/>
-          {/*<Patents id={IDS.PATENTSBLANK} className={styles.patentHolder} />*/}
-
         </AniFrame>
 
         {/* Frame 3 - Graph (Tax paid in the Netherlands) */}
@@ -155,9 +154,10 @@ class App extends Component {
           />
 
         </AniFrame>
-
+         
+        {/* Frame 5 - Australia dots */}
         <AniFrame id={IDS.FRAME5}>
-          {/* Graph (Australia dots) */}
+          
           <Oz id={IDS.OZ} className={styles.oz} />
         </AniFrame>
         </div>

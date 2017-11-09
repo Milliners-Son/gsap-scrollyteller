@@ -154,27 +154,13 @@ initAni = true;
 
 }
 
-let play = (index) =>{
-
-  if(index!= currentLabel){
-    let first,next;
-    first = aniLabels[currentLabel];
-    next = aniLabels[index];
-
-
-    let timeScale = (first<next?1:3);
-    master.timeScale(timeScale).tweenFromTo(first,next);
-    currentLabel = index;
-  }
-}
 
 let playFrame = (current,prev)=>{
   let prevID = (prev?prev:0);
-
   let first = aniLabels[prevID];
   let next = aniLabels[current];
-
-  master.tweenFromTo(first,next);
+  console.log(prevID,current);
+  master.timeScale((prevID<current?1:2)).tweenFromTo(first,next);
 }
 
-module.exports = {init,play,playFrame}
+module.exports = {init,playFrame}
